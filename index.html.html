@@ -1,0 +1,1895 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9º Ano - Gerenciamento de Vendas</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+:root{
+    --primary:#1e3a8a;
+    --secondary:#2563eb;
+    --success:#16a34a;
+    --danger:#dc2626;
+    --warning:#d97706;
+    --bg:#f1f5f9;
+    --card:#fff;
+    --text:#1e293b;
+    --border:#e2e8f0;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+}
+
+#loginScreen{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:linear-gradient(135deg,#172554,#2563eb);
+}
+
+.login-box{
+    width:100%;
+    max-width:430px;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:28px;
+}
+
+.logo-icon{
+    width:75px;
+    height:75px;
+    margin:auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:var(--primary);
+    color:white;
+    border-radius:50%;
+    font-size:32px;
+    margin-bottom:12px;
+}
+
+.logo h1{
+    color:var(--primary);
+    font-size:32px;
+}
+
+.logo p{
+    color:#64748b;
+    margin-top:6px;
+}
+
+.campo{
+    margin-bottom:15px;
+}
+
+.campo label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+    background:white;
+}
+
+input:focus,select:focus{
+    border-color:var(--secondary);
+    box-shadow:0 0 0 3px rgba(37,99,235,.12);
+}
+
+button{
+    border:none;
+    border-radius:8px;
+    padding:11px 16px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-1px);
+    opacity:.9;
+}
+
+.btn-login{
+    width:100%;
+    background:var(--primary);
+    color:white;
+    font-size:16px;
+    padding:14px;
+}
+
+.erro{
+    color:var(--danger);
+    text-align:center;
+    margin-top:12px;
+    font-weight:bold;
+}
+
+#system{
+    display:none;
+    min-height:100vh;
+}
+
+header{
+    background:var(--primary);
+    color:white;
+    padding:17px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:15px;
+    box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+
+header h1{
+    font-size:24px;
+}
+
+.usuario-logado{
+    margin-top:5px;
+    font-size:14px;
+}
+
+.header-acoes{
+    display:flex;
+    gap:8px;
+}
+
+.btn-sair{
+    background:var(--danger);
+    color:white;
+}
+
+.btn-tema{
+    background:white;
+    color:var(--primary);
+}
+
+.menu{
+    background:white;
+    border-bottom:1px solid var(--border);
+    padding:10px 20px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.menu button{
+    background:#e2e8f0;
+    color:#334155;
+}
+
+.menu button.ativo{
+    background:var(--primary);
+    color:white;
+}
+
+main{
+    max-width:1350px;
+    margin:auto;
+    padding:25px;
+}
+
+.aba{
+    display:none;
+}
+
+.aba.ativa{
+    display:block;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:var(--card);
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+    border-left:5px solid var(--primary);
+}
+
+.card h3{
+    color:#64748b;
+    font-size:14px;
+}
+
+.card .numero{
+    font-size:26px;
+    font-weight:bold;
+    color:var(--primary);
+    margin-top:8px;
+}
+
+.painel{
+    background:var(--card);
+    border-radius:12px;
+    padding:22px;
+    margin-bottom:22px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+.painel h2{
+    color:var(--primary);
+    margin-bottom:18px;
+    border-bottom:2px solid #eef2f7;
+    padding-bottom:10px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    align-items:end;
+}
+
+.form-grid-5{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1.2fr auto;
+    gap:10px;
+    align-items:end;
+}
+
+.btn-adicionar{
+    background:var(--success);
+    color:white;
+    height:43px;
+}
+
+.btn-criar{
+    background:var(--secondary);
+    color:white;
+    height:43px;
+}
+
+.tabela-container{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:11px;
+    border:1px solid var(--border);
+    text-align:left;
+}
+
+th{
+    background:var(--primary);
+    color:white;
+}
+
+tr:nth-child(even){
+    background:#f8fafc;
+}
+
+.btn-excluir{
+    background:var(--danger);
+    color:white;
+    padding:7px 10px;
+}
+
+.btn-editar{
+    background:var(--warning);
+    color:white;
+    padding:7px 10px;
+}
+
+.acoes{
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap;
+}
+
+.filtros{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr auto;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.usuario-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border:1px solid var(--border);
+    padding:13px;
+    border-radius:8px;
+    margin-bottom:8px;
+}
+
+.admin{
+    color:var(--primary);
+    font-weight:bold;
+}
+
+.estoque-baixo{
+    color:var(--danger);
+    font-weight:bold;
+}
+
+.estoque-ok{
+    color:var(--success);
+    font-weight:bold;
+}
+
+#toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#0f172a;
+    color:white;
+    padding:14px 20px;
+    border-radius:9px;
+    box-shadow:0 5px 20px rgba(0,0,0,.25);
+    display:none;
+    z-index:9999;
+}
+
+body.dark{
+    --bg:#0f172a;
+    --card:#1e293b;
+    --text:#f8fafc;
+    --border:#334155;
+}
+
+body.dark input,
+body.dark select{
+    background:#0f172a;
+    color:white;
+    border-color:#475569;
+}
+
+body.dark .menu{
+    background:#1e293b;
+}
+
+body.dark .menu button{
+    background:#334155;
+    color:white;
+}
+
+body.dark tr:nth-child(even){
+    background:#253449;
+}
+
+@media(max-width:1000px){
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid,
+    .form-grid-5,
+    .filtros{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:650px){
+    .cards,
+    .form-grid,
+    .form-grid-5,
+    .filtros{
+        grid-template-columns:1fr;
+    }
+
+    header{
+        padding:15px;
+    }
+
+    main{
+        padding:15px;
+    }
+
+    header h1{
+        font-size:19px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="loginScreen">
+
+<div class="login-box">
+
+<div class="logo">
+<div class="logo-icon">9º</div>
+<h1>9º ANO</h1>
+<p>Sistema de Gerenciamento de Vendas</p>
+</div>
+
+<div class="campo">
+<label>Usuário</label>
+<input id="loginUsuario" type="text" placeholder="Digite seu usuário">
+</div>
+
+<div class="campo">
+<label>Senha</label>
+<input id="loginSenha" type="password" placeholder="Digite sua senha">
+</div>
+
+<button class="btn-login" onclick="entrar()">ENTRAR</button>
+
+<div id="mensagemErro" class="erro"></div>
+
+</div>
+</div>
+
+
+<div id="system">
+
+<header>
+
+<div>
+<h1>9º ANO - Gerenciamento de Vendas</h1>
+<div class="usuario-logado">
+Usuário: <strong id="nomeUsuario"></strong>
+</div>
+</div>
+
+<div class="header-acoes">
+<button class="btn-tema" onclick="alternarTema()">🌙 Tema</button>
+<button class="btn-sair" onclick="sair()">SAIR</button>
+</div>
+
+</header>
+
+
+<nav class="menu">
+
+<button class="ativo" onclick="abrirAba('inicio',this)">📊 Início</button>
+<button onclick="abrirAba('vendas',this)">🛒 Vendas</button>
+<button onclick="abrirAba('produtos',this)">📦 Produtos</button>
+<button onclick="abrirAba('usuarios',this)">👤 Usuários</button>
+<button onclick="abrirAba('backup',this)">💾 Backup</button>
+
+</nav>
+
+
+<main>
+
+<section id="inicio" class="aba ativa">
+
+<div class="cards">
+
+<div class="card">
+<h3>Total de Vendas</h3>
+<div class="numero" id="totalVendas">0</div>
+</div>
+
+<div class="card">
+<h3>Produtos Cadastrados</h3>
+<div class="numero" id="totalProdutos">0</div>
+</div>
+
+<div class="card">
+<h3>Itens Vendidos</h3>
+<div class="numero" id="quantidadeProdutos">0</div>
+</div>
+
+<div class="card">
+<h3>Faturamento</h3>
+<div class="numero" id="valorTotal">R$ 0,00</div>
+</div>
+
+</div>
+
+
+<div class="painel">
+
+<h2>📈 Resumo de Pagamentos</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Dinheiro</h3>
+<div class="numero" id="totalDinheiro">R$ 0,00</div>
+</div>
+
+<div class="card">
+<h3>PIX</h3>
+<div class="numero" id="totalPix">R$ 0,00</div>
+</div>
+
+<div class="card">
+<h3>Cartão</h3>
+<div class="numero" id="totalCartao">R$ 0,00</div>
+</div>
+
+<div class="card">
+<h3>Outros</h3>
+<div class="numero" id="totalOutro">R$ 0,00</div>
+</div>
+
+</div>
+</div>
+
+
+<div class="painel">
+
+<h2>⚠️ Estoque Baixo</h2>
+
+<div class="tabela-container">
+
+<table>
+
+<thead>
+<tr>
+<th>Produto</th>
+<th>Categoria</th>
+<th>Estoque</th>
+<th>Preço</th>
+</tr>
+</thead>
+
+<tbody id="tabelaEstoqueBaixo"></tbody>
+
+</table>
+
+</div>
+</div>
+
+</section>
+
+
+<section id="vendas" class="aba">
+
+<div class="painel">
+
+<h2>➕ Registrar Nova Venda</h2>
+
+<div class="form-grid-5">
+
+<div class="campo">
+<label>Produto</label>
+<select id="produtoVenda"></select>
+</div>
+
+<div class="campo">
+<label>Quantidade</label>
+<input type="number" id="quantidade" min="1" value="1">
+</div>
+
+<div class="campo">
+<label>Valor Unitário</label>
+<input type="number" id="valor" step="0.01" placeholder="0,00">
+</div>
+
+<div class="campo">
+<label>Pagamento</label>
+<select id="pagamento">
+<option>Dinheiro</option>
+<option>PIX</option>
+<option>Cartão</option>
+<option>Outro</option>
+</select>
+</div>
+
+<button class="btn-adicionar" onclick="adicionarVenda()">
+ADICIONAR
+</button>
+
+</div>
+</div>
+
+
+<div class="painel">
+
+<h2>📋 Vendas Registradas</h2>
+
+<div class="filtros">
+
+<input id="buscaVenda" placeholder="🔎 Pesquisar produto..." oninput="carregarVendas()">
+
+<input id="dataFiltro" type="date" onchange="carregarVendas()">
+
+<select id="pagamentoFiltro" onchange="carregarVendas()">
+<option value="">Todos pagamentos</option>
+<option>Dinheiro</option>
+<option>PIX</option>
+<option>Cartão</option>
+<option>Outro</option>
+</select>
+
+<button onclick="limparFiltros()">Limpar</button>
+
+</div>
+
+
+<div class="tabela-container">
+
+<table>
+
+<thead>
+<tr>
+<th>Data</th>
+<th>Produto</th>
+<th>Qtd.</th>
+<th>Valor Unit.</th>
+<th>Total</th>
+<th>Pagamento</th>
+<th>Vendedor</th>
+<th>Ação</th>
+</tr>
+</thead>
+
+<tbody id="tabelaVendas"></tbody>
+
+</table>
+
+</div>
+</div>
+
+</section>
+
+
+<section id="produtos" class="aba">
+
+<div class="painel">
+
+<h2>📦 Cadastrar Novo Produto</h2>
+
+<div class="form-grid">
+
+<div class="campo">
+<label>Nome do Produto</label>
+<input id="nomeProduto" placeholder="Ex: Refrigerante">
+</div>
+
+<div class="campo">
+<label>Categoria</label>
+<input id="categoriaProduto" placeholder="Ex: Bebidas">
+</div>
+
+<div class="campo">
+<label>Preço</label>
+<input id="precoProduto" type="number" step="0.01" placeholder="0,00">
+</div>
+
+<div class="campo">
+<label>Estoque Inicial</label>
+<input id="estoqueProduto" type="number" min="0" value="0">
+</div>
+
+</div>
+
+<br>
+
+<button class="btn-criar" onclick="cadastrarProduto()">
+➕ CADASTRAR PRODUTO
+</button>
+
+</div>
+
+
+<div class="painel">
+
+<h2>📦 Produtos Cadastrados</h2>
+
+<input
+id="buscaProduto"
+placeholder="🔎 Pesquisar produto..."
+oninput="carregarProdutos()"
+style="margin-bottom:15px;"
+>
+
+<div class="tabela-container">
+
+<table>
+
+<thead>
+<tr>
+<th>Produto</th>
+<th>Categoria</th>
+<th>Preço</th>
+<th>Estoque</th>
+<th>Status</th>
+<th>Ações</th>
+</tr>
+</thead>
+
+<tbody id="tabelaProdutos"></tbody>
+
+</table>
+
+</div>
+</div>
+
+</section>
+
+
+<section id="usuarios" class="aba">
+
+<div class="painel">
+
+<h2>👤 Criar Login e Senha</h2>
+
+<div class="form-grid">
+
+<div class="campo">
+<label>Novo usuário</label>
+<input id="novoUsuario" placeholder="Digite o usuário">
+</div>
+
+<div class="campo">
+<label>Nova senha</label>
+<input id="novaSenha" type="password" placeholder="Digite a senha">
+</div>
+
+<div class="campo">
+<label>Tipo</label>
+<select id="tipoUsuario">
+<option value="Usuário">Usuário</option>
+<option value="Administrador">Administrador</option>
+</select>
+</div>
+
+<button class="btn-criar" onclick="criarUsuario()">
+CRIAR LOGIN
+</button>
+
+</div>
+
+<div style="margin-top:20px" id="listaUsuarios"></div>
+
+</div>
+
+</section>
+
+
+<section id="backup" class="aba">
+
+<div class="painel">
+
+<h2>💾 Backup do Sistema</h2>
+
+<p style="margin-bottom:15px;">
+Faça uma cópia dos produtos, vendas e usuários.
+</p>
+
+<button class="btn-criar" onclick="fazerBackup()">
+⬇️ BAIXAR BACKUP
+</button>
+
+<br><br>
+
+<label style="font-weight:bold;">
+Restaurar Backup
+</label>
+
+<br><br>
+
+<input type="file" id="arquivoBackup" accept=".json">
+
+<br><br>
+
+<button class="btn-adicionar" onclick="restaurarBackup()">
+⬆️ RESTAURAR BACKUP
+</button>
+
+</div>
+
+
+<div class="painel">
+
+<h2>🖨️ Relatório</h2>
+
+<button class="btn-criar" onclick="imprimirRelatorio()">
+🖨️ IMPRIMIR RELATÓRIO
+</button>
+
+</div>
+
+
+<div class="painel">
+
+<h2>⚠️ Zona de Segurança</h2>
+
+<button class="btn-excluir" onclick="limparTodasVendas()">
+🗑️ APAGAR TODAS AS VENDAS
+</button>
+
+</div>
+
+</section>
+
+</main>
+</div>
+
+<div id="toast"></div>
+
+
+<script>
+
+let usuarios =
+JSON.parse(localStorage.getItem("usuarios9ano")) || [
+{
+usuario:"admin",
+senha:"1234",
+tipo:"Administrador"
+}
+];
+
+let produtos =
+JSON.parse(localStorage.getItem("produtos9ano")) || [];
+
+let vendas =
+JSON.parse(localStorage.getItem("vendas9ano")) || [];
+
+let usuarioAtual=null;
+
+
+function salvarTudo(){
+
+localStorage.setItem("usuarios9ano",JSON.stringify(usuarios));
+localStorage.setItem("produtos9ano",JSON.stringify(produtos));
+localStorage.setItem("vendas9ano",JSON.stringify(vendas));
+
+}
+
+
+function entrar(){
+
+const usuario=document.getElementById("loginUsuario").value.trim();
+const senha=document.getElementById("loginSenha").value;
+
+const encontrado=usuarios.find(
+u=>u.usuario===usuario && u.senha===senha
+);
+
+if(!encontrado){
+
+document.getElementById("mensagemErro").innerText=
+"Usuário ou senha incorretos.";
+
+return;
+
+}
+
+usuarioAtual=encontrado;
+
+document.getElementById("loginScreen").style.display="none";
+document.getElementById("system").style.display="block";
+document.getElementById("nomeUsuario").innerText=encontrado.usuario;
+
+carregarTudo();
+
+}
+
+
+function sair(){
+
+usuarioAtual=null;
+
+document.getElementById("system").style.display="none";
+document.getElementById("loginScreen").style.display="flex";
+
+document.getElementById("loginUsuario").value="";
+document.getElementById("loginSenha").value="";
+document.getElementById("mensagemErro").innerText="";
+
+}
+
+
+function abrirAba(id,botao){
+
+document.querySelectorAll(".aba")
+.forEach(a=>a.classList.remove("ativa"));
+
+document.getElementById(id).classList.add("ativa");
+
+document.querySelectorAll(".menu button")
+.forEach(b=>b.classList.remove("ativo"));
+
+botao.classList.add("ativo");
+
+carregarTudo();
+
+}
+
+
+function cadastrarProduto(){
+
+const nome=document.getElementById("nomeProduto").value.trim();
+const categoria=document.getElementById("categoriaProduto").value.trim();
+const preco=Number(document.getElementById("precoProduto").value);
+const estoque=Number(document.getElementById("estoqueProduto").value);
+
+if(!nome || preco<=0 || estoque<0){
+
+mostrarToast("Preencha os dados corretamente.");
+return;
+
+}
+
+if(produtos.some(p=>p.nome.toLowerCase()===nome.toLowerCase())){
+
+mostrarToast("Esse produto já está cadastrado.");
+return;
+
+}
+
+produtos.push({
+id:Date.now(),
+nome:nome,
+categoria:categoria || "Sem categoria",
+preco:preco,
+estoque:estoque
+});
+
+salvarTudo();
+
+document.getElementById("nomeProduto").value="";
+document.getElementById("categoriaProduto").value="";
+document.getElementById("precoProduto").value="";
+document.getElementById("estoqueProduto").value="0";
+
+carregarTudo();
+
+mostrarToast("Produto cadastrado com sucesso!");
+
+}
+
+
+function carregarProdutos(){
+
+const tabela=document.getElementById("tabelaProdutos");
+
+if(!tabela)return;
+
+tabela.innerHTML="";
+
+const busca=(document.getElementById("buscaProduto")?.value || "")
+.toLowerCase();
+
+produtos
+.filter(p=>p.nome.toLowerCase().includes(busca))
+.forEach(p=>{
+
+const tr=document.createElement("tr");
+
+const status=p.estoque<=5
+?'<span class="estoque-baixo">ESTOQUE BAIXO</span>'
+:'<span class="estoque-ok">NORMAL</span>';
+
+tr.innerHTML=`
+
+<td><strong>${escapar(p.nome)}</strong></td>
+<td>${escapar(p.categoria)}</td>
+<td>${formatarMoeda(p.preco)}</td>
+<td>${p.estoque}</td>
+<td>${status}</td>
+
+<td>
+<div class="acoes">
+
+<button class="btn-editar"
+onclick="editarProduto(${p.id})">
+Editar
+</button>
+
+<button class="btn-excluir"
+onclick="excluirProduto(${p.id})">
+Excluir
+</button>
+
+</div>
+</td>
+`;
+
+tabela.appendChild(tr);
+
+});
+
+}
+
+
+function editarProduto(id){
+
+const produto=produtos.find(p=>p.id===id);
+
+if(!produto)return;
+
+const nome=prompt("Nome do produto:",produto.nome);
+if(nome===null)return;
+
+const categoria=prompt("Categoria:",produto.categoria);
+if(categoria===null)return;
+
+const preco=Number(prompt("Preço:",produto.preco));
+
+if(isNaN(preco)||preco<=0){
+mostrarToast("Preço inválido.");
+return;
+}
+
+const estoque=Number(prompt("Estoque:",produto.estoque));
+
+if(isNaN(estoque)||estoque<0){
+mostrarToast("Estoque inválido.");
+return;
+}
+
+produto.nome=nome.trim();
+produto.categoria=categoria.trim();
+produto.preco=preco;
+produto.estoque=estoque;
+
+salvarTudo();
+carregarTudo();
+
+mostrarToast("Produto atualizado!");
+
+}
+
+
+function excluirProduto(id){
+
+const produto=produtos.find(p=>p.id===id);
+
+if(!produto)return;
+
+const usado=vendas.some(v=>v.produtoId===id);
+
+if(usado){
+
+mostrarToast(
+"Esse produto possui vendas registradas e não pode ser excluído."
+);
+
+return;
+
+}
+
+if(!confirm(`Excluir o produto "${produto.nome}"?`))return;
+
+produtos=produtos.filter(p=>p.id!==id);
+
+salvarTudo();
+carregarTudo();
+
+mostrarToast("Produto excluído.");
+
+}
+
+
+function carregarSelectProdutos(){
+
+const select=document.getElementById("produtoVenda");
+
+if(!select)return;
+
+select.innerHTML=
+'<option value="">Selecione um produto</option>';
+
+produtos.forEach(p=>{
+
+const option=document.createElement("option");
+
+option.value=p.id;
+
+option.textContent=
+`${p.nome} — ${formatarMoeda(p.preco)} — Estoque: ${p.estoque}`;
+
+select.appendChild(option);
+
+});
+
+}
+
+
+document.addEventListener("change",function(e){
+
+if(e.target.id==="produtoVenda"){
+
+const id=Number(e.target.value);
+
+const produto=produtos.find(p=>p.id===id);
+
+if(produto){
+
+document.getElementById("valor").value=produto.preco;
+
+}
+
+}
+
+});
+
+
+function adicionarVenda(){
+
+const produtoId=Number(
+document.getElementById("produtoVenda").value
+);
+
+const quantidade=Number(
+document.getElementById("quantidade").value
+);
+
+const valor=Number(
+document.getElementById("valor").value
+);
+
+const pagamento=document.getElementById("pagamento").value;
+
+const produto=produtos.find(p=>p.id===produtoId);
+
+if(!produto){
+
+mostrarToast("Selecione um produto.");
+return;
+
+}
+
+if(quantidade<=0){
+
+mostrarToast("Quantidade inválida.");
+return;
+
+}
+
+if(valor<=0){
+
+mostrarToast("Valor inválido.");
+return;
+
+}
+
+if(produto.estoque<quantidade){
+
+mostrarToast(
+`Estoque insuficiente. Disponível: ${produto.estoque}`
+);
+
+return;
+
+}
+
+const total=quantidade*valor;
+
+const agora=new Date();
+
+vendas.push({
+
+id:Date.now(),
+
+data:agora.toLocaleDateString("pt-BR"),
+
+hora:agora.toLocaleTimeString(
+"pt-BR",
+{
+hour:"2-digit",
+minute:"2-digit"
+}
+),
+
+produtoId:produto.id,
+produto:produto.nome,
+quantidade:quantidade,
+valor:valor,
+total:total,
+pagamento:pagamento,
+vendedor:usuarioAtual.usuario
+
+});
+
+produto.estoque-=quantidade;
+
+salvarTudo();
+
+document.getElementById("produtoVenda").value="";
+document.getElementById("quantidade").value="1";
+document.getElementById("valor").value="";
+
+carregarTudo();
+
+mostrarToast("Venda registrada com sucesso!");
+
+}
+
+
+function carregarVendas(){
+
+const tabela=document.getElementById("tabelaVendas");
+
+if(!tabela)return;
+
+tabela.innerHTML="";
+
+const busca=
+(document.getElementById("buscaVenda")?.value || "")
+.toLowerCase();
+
+const dataFiltro=
+document.getElementById("dataFiltro")?.value || "";
+
+const pagamentoFiltro=
+document.getElementById("pagamentoFiltro")?.value || "";
+
+vendas
+.filter(v=>{
+
+const nomeOk=v.produto.toLowerCase().includes(busca);
+
+const dataOk=
+!dataFiltro || converterData(v.data)===dataFiltro;
+
+const pagamentoOk=
+!pagamentoFiltro || v.pagamento===pagamentoFiltro;
+
+return nomeOk && dataOk && pagamentoOk;
+
+})
+.forEach(v=>{
+
+const tr=document.createElement("tr");
+
+tr.innerHTML=`
+
+<td>${v.data} ${v.hora || ""}</td>
+<td>${escapar(v.produto)}</td>
+<td>${v.quantidade}</td>
+<td>${formatarMoeda(v.valor)}</td>
+<td><strong>${formatarMoeda(v.total)}</strong></td>
+<td>${v.pagamento}</td>
+<td>${escapar(v.vendedor)}</td>
+
+<td>
+<button class="btn-excluir"
+onclick="excluirVenda(${v.id})">
+Excluir
+</button>
+</td>
+`;
+
+tabela.appendChild(tr);
+
+});
+
+atualizarResumo();
+
+}
+
+
+function excluirVenda(id){
+
+const venda=vendas.find(v=>v.id===id);
+
+if(!venda)return;
+
+if(!confirm("Deseja excluir esta venda?"))return;
+
+const produto=produtos.find(p=>p.id===venda.produtoId);
+
+if(produto){
+produto.estoque+=venda.quantidade;
+}
+
+vendas=vendas.filter(v=>v.id!==id);
+
+salvarTudo();
+carregarTudo();
+
+mostrarToast("Venda excluída e estoque restaurado.");
+
+}
+
+
+function atualizarResumo(){
+
+let quantidade=0;
+let faturamento=0;
+let dinheiro=0;
+let pix=0;
+let cartao=0;
+let outro=0;
+
+vendas.forEach(v=>{
+
+quantidade+=Number(v.quantidade);
+faturamento+=Number(v.total);
+
+if(v.pagamento==="Dinheiro")dinheiro+=v.total;
+if(v.pagamento==="PIX")pix+=v.total;
+if(v.pagamento==="Cartão")cartao+=v.total;
+if(v.pagamento==="Outro")outro+=v.total;
+
+});
+
+document.getElementById("totalVendas").innerText=vendas.length;
+document.getElementById("totalProdutos").innerText=produtos.length;
+document.getElementById("quantidadeProdutos").innerText=quantidade;
+document.getElementById("valorTotal").innerText=formatarMoeda(faturamento);
+
+document.getElementById("totalDinheiro").innerText=formatarMoeda(dinheiro);
+document.getElementById("totalPix").innerText=formatarMoeda(pix);
+document.getElementById("totalCartao").innerText=formatarMoeda(cartao);
+document.getElementById("totalOutro").innerText=formatarMoeda(outro);
+
+carregarEstoqueBaixo();
+
+}
+
+
+function carregarEstoqueBaixo(){
+
+const tabela=document.getElementById("tabelaEstoqueBaixo");
+
+if(!tabela)return;
+
+tabela.innerHTML="";
+
+const baixos=produtos.filter(p=>p.estoque<=5);
+
+if(baixos.length===0){
+
+tabela.innerHTML=`
+<tr>
+<td colspan="4">Nenhum produto com estoque baixo.</td>
+</tr>
+`;
+
+return;
+
+}
+
+baixos.forEach(p=>{
+
+const tr=document.createElement("tr");
+
+tr.innerHTML=`
+
+<td>${escapar(p.nome)}</td>
+<td>${escapar(p.categoria)}</td>
+<td class="estoque-baixo">${p.estoque}</td>
+<td>${formatarMoeda(p.preco)}</td>
+
+`;
+
+tabela.appendChild(tr);
+
+});
+
+}
+
+
+function criarUsuario(){
+
+if(!usuarioAtual ||
+usuarioAtual.tipo!=="Administrador"){
+
+mostrarToast(
+"Somente o administrador pode criar usuários."
+);
+
+return;
+
+}
+
+const usuario=
+document.getElementById("novoUsuario").value.trim();
+
+const senha=
+document.getElementById("novaSenha").value;
+
+const tipo=
+document.getElementById("tipoUsuario").value;
+
+if(!usuario||!senha){
+
+mostrarToast("Preencha usuário e senha.");
+return;
+
+}
+
+if(usuarios.some(u=>u.usuario===usuario)){
+
+mostrarToast("Esse usuário já existe.");
+return;
+
+}
+
+usuarios.push({
+usuario:usuario,
+senha:senha,
+tipo:tipo
+});
+
+salvarTudo();
+
+document.getElementById("novoUsuario").value="";
+document.getElementById("novaSenha").value="";
+
+carregarUsuarios();
+
+mostrarToast("Usuário criado com sucesso!");
+
+}
+
+
+function carregarUsuarios(){
+
+const lista=document.getElementById("listaUsuarios");
+
+if(!lista)return;
+
+lista.innerHTML="";
+
+usuarios.forEach((u,index)=>{
+
+const div=document.createElement("div");
+
+div.className="usuario-item";
+
+div.innerHTML=`
+
+<div>
+
+<strong>${escapar(u.usuario)}</strong>
+
+<br>
+
+<span class="${u.tipo==="Administrador"?"admin":""}">
+${u.tipo}
+</span>
+
+</div>
+
+<div>
+
+${
+u.tipo!=="Administrador"
+?
+`
+<button class="btn-excluir"
+onclick="excluirUsuario(${index})">
+Excluir
+</button>
+`
+:""
+}
+
+</div>
+
+`;
+
+lista.appendChild(div);
+
+});
+
+}
+
+
+function excluirUsuario(index){
+
+if(!usuarioAtual ||
+usuarioAtual.tipo!=="Administrador"){
+
+mostrarToast(
+"Apenas o administrador pode excluir usuários."
+);
+
+return;
+
+}
+
+if(!confirm("Excluir este usuário?"))return;
+
+usuarios.splice(index,1);
+
+salvarTudo();
+carregarUsuarios();
+
+mostrarToast("Usuário excluído.");
+
+}
+
+
+function fazerBackup(){
+
+const dados={
+usuarios:usuarios,
+produtos:produtos,
+vendas:vendas,
+dataBackup:new Date().toISOString()
+};
+
+const blob=new Blob(
+[JSON.stringify(dados,null,2)],
+{type:"application/json"}
+);
+
+const url=URL.createObjectURL(blob);
+
+const a=document.createElement("a");
+
+a.href=url;
+
+a.download=
+`backup-9ano-${new Date().toISOString().slice(0,10)}.json`;
+
+a.click();
+
+URL.revokeObjectURL(url);
+
+mostrarToast("Backup criado.");
+
+}
+
+
+function restaurarBackup(){
+
+const arquivo=
+document.getElementById("arquivoBackup").files[0];
+
+if(!arquivo){
+
+mostrarToast("Selecione um arquivo de backup.");
+return;
+
+}
+
+const leitor=new FileReader();
+
+leitor.onload=function(e){
+
+try{
+
+const dados=JSON.parse(e.target.result);
+
+if(
+!dados.usuarios ||
+!dados.produtos ||
+!dados.vendas
+){
+
+throw new Error();
+
+}
+
+if(!confirm(
+"Restaurar este backup? Os dados atuais serão substituídos."
+))return;
+
+usuarios=dados.usuarios;
+produtos=dados.produtos;
+vendas=dados.vendas;
+
+salvarTudo();
+carregarTudo();
+
+mostrarToast("Backup restaurado!");
+
+}catch{
+
+mostrarToast("Arquivo de backup inválido.");
+
+}
+
+};
+
+leitor.readAsText(arquivo);
+
+}
+
+
+function imprimirRelatorio(){
+
+let linhas="";
+
+vendas.forEach(v=>{
+
+linhas+=`
+
+<tr>
+<td>${v.data}</td>
+<td>${v.produto}</td>
+<td>${v.quantidade}</td>
+<td>${formatarMoeda(v.valor)}</td>
+<td>${formatarMoeda(v.total)}</td>
+<td>${v.pagamento}</td>
+<td>${v.vendedor}</td>
+</tr>
+
+`;
+
+});
+
+const janela=window.open("","_blank");
+
+janela.document.write(`
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Relatório - 9º Ano</title>
+
+<style>
+
+body{
+font-family:Arial;
+padding:30px;
+}
+
+h1{
+text-align:center;
+color:#1e3a8a;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:25px;
+}
+
+th,td{
+border:1px solid #999;
+padding:8px;
+}
+
+th{
+background:#1e3a8a;
+color:white;
+}
+
+.resumo{
+margin-top:20px;
+font-size:18px;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>9º ANO - RELATÓRIO DE VENDAS</h1>
+
+<p>Data:
+${new Date().toLocaleString("pt-BR")}</p>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Data</th>
+<th>Produto</th>
+<th>Qtd.</th>
+<th>Valor Unit.</th>
+<th>Total</th>
+<th>Pagamento</th>
+<th>Vendedor</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+${linhas}
+
+</tbody>
+
+</table>
+
+<div class="resumo">
+
+Total de vendas: ${vendas.length}<br>
+
+Faturamento:
+${formatarMoeda(
+vendas.reduce((s,v)=>s+v.total,0)
+)}
+
+</div>
+
+<script>
+
+window.onload=function(){
+window.print();
+}
+
+<\/script>
+
+</body>
+
+</html>
+
+`);
+
+janela.document.close();
+
+}
+
+
+function limparTodasVendas(){
+
+if(!usuarioAtual ||
+usuarioAtual.tipo!=="Administrador"){
+
+mostrarToast(
+"Somente o administrador pode apagar as vendas."
+);
+
+return;
+
+}
+
+if(!confirm(
+"ATENÇÃO! Isso apagará TODAS as vendas. Continuar?"
+))return;
+
+vendas.forEach(v=>{
+
+const produto=
+produtos.find(p=>p.id===v.produtoId);
+
+if(produto){
+produto.estoque+=v.quantidade;
+}
+
+});
+
+vendas=[];
+
+salvarTudo();
+carregarTudo();
+
+mostrarToast("Todas as vendas foram apagadas.");
+
+}
+
+
+function limparFiltros(){
+
+document.getElementById("buscaVenda").value="";
+document.getElementById("dataFiltro").value="";
+document.getElementById("pagamentoFiltro").value="";
+
+carregarVendas();
+
+}
+
+
+function alternarTema(){
+
+document.body.classList.toggle("dark");
+
+localStorage.setItem(
+"tema9ano",
+document.body.classList.contains("dark")
+?"dark"
+:"light"
+);
+
+}
+
+
+if(localStorage.getItem("tema9ano")==="dark"){
+document.body.classList.add("dark");
+}
+
+
+let toastTimeout;
+
+function mostrarToast(mensagem){
+
+const toast=document.getElementById("toast");
+
+toast.innerText=mensagem;
+
+toast.style.display="block";
+
+clearTimeout(toastTimeout);
+
+toastTimeout=setTimeout(()=>{
+toast.style.display="none";
+},3000);
+
+}
+
+
+function formatarMoeda(valor){
+
+return Number(valor).toLocaleString(
+"pt-BR",
+{
+style:"currency",
+currency:"BRL"
+}
+);
+
+}
+
+
+function escapar(texto){
+
+return String(texto)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+function converterData(data){
+
+const partes=data.split("/");
+
+if(partes.length!==3)return"";
+
+return `${partes[2]}-${partes[1].padStart(2,"0")}-${partes[0].padStart(2,"0")}`;
+
+}
+
+
+function carregarTudo(){
+
+carregarProdutos();
+carregarSelectProdutos();
+carregarVendas();
+carregarUsuarios();
+atualizarResumo();
+
+}
+
+
+document
+.getElementById("loginSenha")
+.addEventListener("keypress",function(e){
+
+if(e.key==="Enter"){
+entrar();
+}
+
+});
+
+</script>
+
+</body>
+</html>
+```
